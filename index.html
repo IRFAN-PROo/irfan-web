@@ -126,6 +126,8 @@ h1::after{content:attr(data-t);position:absolute;left:0;top:90%;width:100%;trans
 .btn.solid:hover{background:#000;color:#d4d4d4}
 h2 .ac{color:#fff}
 h2{color:#9a9a9a}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;pointer-events:none;background:#111;border:1px solid #444;color:#d4d4d4;padding:12px 20px;border-radius:999px;font-size:13px;z-index:60;transition:.35s;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
 </style></head><body>
 <div id="load"><span>IRFAN</span></div><div id="bar"></div><canvas id="net"></canvas><div id="glow"></div>
 <nav><div class="logo">IR.</div><a class="btn" href="#contact">CONNECT</a></nav>
@@ -196,13 +198,13 @@ h2{color:#9a9a9a}
 <section id="contact" class="rv">
 <div class="tag">07 / CONNECTION</div><h2>LET'S FIX SOMETHING.</h2>
 <p style="color:#bbb;margin-bottom:24px">Got a broken machine, an old PC, parts to buy or a small coding idea? Connect directly and start a conversation.</p>
-<div class="btns"><a class="btn solid" href="https://www.instagram.com/irfanx_._010_/" target="_blank" rel="noopener">📸 INSTAGRAM</a><a class="btn" href="https://ig.me/m/irfanx_._010_" target="_blank" rel="noopener">💬 MESSAGE ON INSTAGRAM</a><a class="btn" href="tel:+919847132692">📞 CALL</a><a class="btn" href="https://wa.me/919847132692" target="_blank" rel="noopener">🟢 WHATSAPP</a><a class="btn" href="https://www.facebook.com/share/1HFmVtsBAW/" target="_blank" rel="noopener">📘 FACEBOOK</a><a class="btn" id="gh" href="#" target="_blank" rel="noopener" style="display:none">💻 GITHUB</a></div>
+<div class="btns"><a class="btn solid" href="https://www.instagram.com/irfanx_._010_/" target="_blank" rel="noopener">📸 INSTAGRAM</a><a class="btn" href="https://ig.me/m/irfanx_._010_">💬 MESSAGE ON INSTAGRAM</a><a class="btn" href="tel:+919847132692">📞 CALL</a><a class="btn" href="https://wa.me/919847132692" target="_blank" rel="noopener">🟢 WHATSAPP</a><a class="btn" href="https://www.facebook.com/share/1HFmVtsBAW/" target="_blank" rel="noopener">📘 FACEBOOK</a><a class="btn" id="gh" href="#" target="_blank" rel="noopener" style="display:none">💻 GITHUB</a></div>
 <p style="color:#8d8d8d;font-size:13px;margin-top:18px;letter-spacing:3px">+91 98471 32692</p></section>
 <section id="lab" class="rv">
 <div class="tag">08 / INTERACT</div><h2>TOUCH THE PARTICLES.</h2>
 <div class="pz"><canvas id="bg"></canvas><div class="ctl"><div class="sw" id="sw"><button class="btn solid" data-s="0">🔮 SPHERE</button><button class="btn" data-s="1">🍩 TORUS</button><button class="btn" data-s="2">🌌 GALAXY</button><button class="btn" data-s="3">⚙️ GEAR</button><button class="btn" data-s="4">🔠 IRFAN</button></div><div class="hint">MOVE TO ATTRACT · HOLD TO GATHER · RELEASE TO BURST</div></div></div></section>
 
-<footer>IRFAN · REPAIR. RESELL. CREATE. · 2026</footer>
+<div id="toast"></div><footer>IRFAN · REPAIR. RESELL. CREATE. · 2026</footer>
 
 <script>
 (function(){
@@ -311,13 +313,14 @@ c.addEventListener('mousemove',gm);c.addEventListener('touchmove',gm,{passive:fa
 go.onclick=start;draw();
 var GITHUB_USER='IRFAN-PROo';/* put the GitHub username here */
 if(GITHUB_USER){var gh=$('gh');gh.href='https://github.com/'+GITHUB_USER;gh.style.display=''}
+function dm(msg){var t=$('toast');try{navigator.clipboard.writeText(msg).catch(function(){})}catch(e){}t.textContent='📋 Message copied · opening Instagram DM… paste it in the chat';t.classList.add('on');setTimeout(function(){location.href='https://ig.me/m/irfanx_._010_'},1300);setTimeout(function(){t.classList.remove('on')},4500)}
 /* parts bay */
 var NUM='919847132692',PT=[['RAM Sticks','RAM','DDR3 / DDR4 modules'],['SSD Drives','STORAGE','Fast storage, tested'],['HDD Drives','STORAGE','Health checked'],['Laptop Motherboards','BOARDS','Working boards'],['Desktop Motherboards','BOARDS','Pulled from old PCs'],['Graphics Cards','GPU','Tested under load'],['Power Supplies','POWER','Stable output'],['Laptop Chargers','POWER','Working adapters'],['Laptop Screens','DISPLAY','Clean panels'],['CPUs','CPU','Tested processors'],['Fans & Heatsinks','COOLING','Cleaned & ready'],['Keyboards & Batteries','ACCESSORIES','Working units']];
 var cats=['ALL'],fl=$('fl'),pg=$('pg'),fc='ALL';
 PT.forEach(function(p){if(cats.indexOf(p[1])<0)cats.push(p[1])});
 function showParts(){pg.innerHTML='';PT.filter(function(p){return fc=='ALL'||p[1]==fc}).forEach(function(p,i){var d=document.createElement('div');d.className='pt';d.style.animationDelay=i*.05+'s';
 d.innerHTML='<small>'+p[1]+'</small><h4>'+p[0]+'</h4><p>'+p[2]+'</p><span class="ok">TESTED ✓ · ASK PRICE</span>';
-d.onclick=function(){try{navigator.clipboard.writeText('Hi Irfan, I am interested in: '+p[0]).catch(function(){})}catch(e){}open('https://www.instagram.com/irfanx_._010_/','_blank')};pg.appendChild(d)})}
+d.onclick=function(){dm('Hi Irfan, I am interested in: '+p[0])};pg.appendChild(d)})}
 function showFl(){fl.innerHTML='';cats.forEach(function(k){var bt=document.createElement('button');bt.className='btn'+(k==fc?' solid':'');bt.textContent=k;bt.onclick=function(){fc=k;showFl();showParts()};fl.appendChild(bt)})}
 showFl();showParts();
 })();
